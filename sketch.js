@@ -24,6 +24,8 @@ function setallzero(){
 }
 
 function setup() {
+  screenwidth=windowWidth;
+  screenhight=windowHeight;
   createCanvas(screenwidth, screenhight);
   textSize(25);
   highscore=getItem("hiscore");
@@ -35,10 +37,10 @@ function draw() {
   if(flag===1){
     ellipse(posx,posy,elwid,elhi);
     if(direction===0){
-      posy=posy+speed;
+      posy=posy+speed+(posy*0.01);
     }
     else{
-      posy=posy-speed;
+      posy=posy-speed-(posy*0.01);
     }
     if(posy<50){
       direction=0;
@@ -48,7 +50,6 @@ function draw() {
         highscore=score;
       }
       flag=0;
-      setallzero();
     }
     if(posx-elwid<0 || posx+elwid>screenwidth){
       xadd=-xadd;
@@ -56,8 +57,7 @@ function draw() {
 
     posx=posx+xadd;
     speed=speed+score*0.0005;
-    textSize(24);
-    text("score:"+score,450,50)
+    
 
   }
   else{
@@ -67,7 +67,8 @@ function draw() {
     textSize(15);    
     text("Click on ball to keep it in screen",100,300)
   }
-  
+    textSize(24);
+    text("score:"+score,screenwidth-screenwidth/3,50)
 }
 
 function mousePressed(){
@@ -75,6 +76,7 @@ function mousePressed(){
 
   if(flag===0){
     storeItem("hiscore",highscore);
+    setallzero();
     flag=1;
   }
   else{
